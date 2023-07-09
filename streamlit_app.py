@@ -30,6 +30,7 @@ if st.button("Summarize"):
 
               # Initialize the OpenAI module, load and run the summarize chain
               llm = OpenAI(temperature=0, openai_api_key=openai_api_key)
+              chain = None
               if not character_input:
                   chain = load_summarize_chain(llm, chain_type="map_reduce")
               else:
@@ -43,7 +44,10 @@ if st.button("Summarize"):
                       chain = load_summarize_chain(llm, chain_type="stuff", prompt=PROMPT)
                   except Exception as e:
                      print(e) 
-              #chain = load_summarize_chain(llm, chain_type="map_reduce")
+              
+                if chain is None:
+                    print("chain is none")
+                    chain = load_summarize_chain(llm, chain_type="map_reduce")
               summary = chain.run(docs)
 
               st.success(summary)
