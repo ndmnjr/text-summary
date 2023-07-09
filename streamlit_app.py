@@ -35,12 +35,13 @@ if st.button("Summarize"):
                   chain = load_summarize_chain(llm, chain_type="map_reduce")
               else:
                   try:
-                      prompt_template = """Write a concise summary of the following in less than 500 characters:
+                      prompt_template = """Write a concise summary of the following in less than {nb_char} characters:
         
         
                         {source_text}
                         """
-                      PROMPT = PromptTemplate(template=prompt_template, input_variables=["source_text"])
+                      prompt_template.format(source_text=source_text,nb_char=character_input)
+                      PROMPT = PromptTemplate(template=prompt_template, input_variables=["nb_char","source_text"])
                       chain = load_summarize_chain(llm, chain_type="stuff", prompt=PROMPT)
                   except Exception as e:
                      st.write(e) 
