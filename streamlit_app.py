@@ -54,3 +54,4 @@ if st.button("Summarize"):
               st.success(summary)
         except Exception as e:
             st.exception(f"An error occurred: {e}")
+            st.write(e)
