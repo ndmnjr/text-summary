@@ -43,10 +43,10 @@ if st.button("Summarize"):
                       PROMPT = PromptTemplate(template=prompt_template, input_variables=["text"])
                       chain = load_summarize_chain(llm, chain_type="stuff", prompt=PROMPT)
                   except Exception as e:
-                     print(e) 
+                     st.write(e) 
               
               if chain is None:
-                  print("chain is none")
+                  st.write("chain is none")
                   chain = load_summarize_chain(llm, chain_type="map_reduce")
               summary = chain.run(docs)
 
