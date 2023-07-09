@@ -40,7 +40,7 @@ if st.button("Summarize"):
         
                         {text}
                         """
-                      prompt_template.format(nb_char=character_input)
+                      prompt_template.format(nb_char=character_input,text=source_text)
                       PROMPT = PromptTemplate(template=prompt_template, input_variables=["nb_char","text"])
                       chain = load_summarize_chain(llm, chain_type="stuff", prompt=PROMPT)
                   except Exception as e:
