@@ -45,9 +45,9 @@ if st.button("Summarize"):
                   except Exception as e:
                      print(e) 
               
-                if chain is None:
-                    print("chain is none")
-                    chain = load_summarize_chain(llm, chain_type="map_reduce")
+              if chain is None:
+                  print("chain is none")
+                  chain = load_summarize_chain(llm, chain_type="map_reduce")
               summary = chain.run(docs)
 
               st.success(summary)
