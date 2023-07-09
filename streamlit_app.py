@@ -10,7 +10,7 @@ st.subheader('Test Langchain Text Summary')
 
 # Get OpenAI API key and source text input
 openai_api_key = st.text_input("OpenAI API Key", type="password")
-character_input = st.text_input("Specify the maximum number of characters ", type="text")
+character_input = st.text_input("Specify the maximum number of characters ", type="default")
 source_text = st.text_area("Source Text", height=200)
 
 # If the 'Summarize' button is clicked
