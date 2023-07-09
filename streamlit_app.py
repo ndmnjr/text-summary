@@ -33,13 +33,16 @@ if st.button("Summarize"):
               if not character_input:
                   chain = load_summarize_chain(llm, chain_type="map_reduce")
               else:
-                  prompt_template = """Write a concise summary of the following in less than {character_input}:
-    
-    
-                    {source_text}
-                    """
-                  PROMPT = PromptTemplate(template=prompt_template, input_variables=["text"])
-                  chain = load_summarize_chain(llm, chain_type="stuff", prompt=PROMPT)
+                  try:
+                      prompt_template = """Write a concise summary of the following in less than {character_input} characters:
+        
+        
+                        {source_text}
+                        """
+                      PROMPT = PromptTemplate(template=prompt_template, input_variables=["text"])
+                      chain = load_summarize_chain(llm, chain_type="stuff", prompt=PROMPT)
+                  except Exception e:
+                     print(e) 
               #chain = load_summarize_chain(llm, chain_type="map_reduce")
               summary = chain.run(docs)
 
