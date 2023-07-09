@@ -3,18 +3,20 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.docstore.document import Document
 from langchain.llms.openai import OpenAI
 from langchain.chains.summarize import load_summarize_chain
+from langchain import PromptTemplate, LLMChain
 
 # Streamlit app
 st.subheader('Test Langchain Text Summary')
 
 # Get OpenAI API key and source text input
-openai_api_key = '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'
+openai_api_key = st.text_input("OpenAI API Key", type="password")
+character_input = st.text_input("Specify the maximum number of characters ", type="text")
 source_text = st.text_area("Source Text", height=200)
 
 # If the 'Summarize' button is clicked
 if st.button("Summarize"):
     # Validate inputs
-    if not source_text.strip():
+    if not openai_api_key.strip() or not source_text.strip():
         st.error(f"Please provide the missing fields.")
     else:
         try:
@@ -28,7 +30,17 @@ if st.button("Summarize"):
 
               # Initialize the OpenAI module, load and run the summarize chain
               llm = OpenAI(temperature=0, openai_api_key=openai_api_key)
-              chain = load_summarize_chain(llm, chain_type="map_reduce")
+              if not character_input:
+                  chain = load_summarize_chain(llm, chain_type="map_reduce")
+              else:
+                  prompt_template = """Write a concise summary of the following in less than {character_input}:
+    
+    
+                    {source_text}
+                    """
+                  PROMPT = PromptTemplate(template=prompt_template, input_variables=["text"])
+                  chain = load_summarize_chain(llm, chain_type="stuff", prompt=PROMPT)
+              #chain = load_summarize_chain(llm, chain_type="map_reduce")
               summary = chain.run(docs)
 
               st.success(summary)
