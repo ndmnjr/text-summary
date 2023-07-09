@@ -5,16 +5,16 @@ from langchain.llms.openai import OpenAI
 from langchain.chains.summarize import load_summarize_chain
 
 # Streamlit app
-st.subheader('LangChain Text Summary')
+st.subheader('Test Langchain Text Summary')
 
 # Get OpenAI API key and source text input
-openai_api_key = st.text_input("OpenAI API Key", type="password")
+openai_api_key = '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'
 source_text = st.text_area("Source Text", height=200)
 
 # If the 'Summarize' button is clicked
 if st.button("Summarize"):
     # Validate inputs
-    if not openai_api_key.strip() or not source_text.strip():
+    if not source_text.strip():
         st.error(f"Please provide the missing fields.")
     else:
         try:
